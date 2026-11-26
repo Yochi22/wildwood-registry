@@ -3,7 +3,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api.js';
 import { useAuth } from '../lib/auth.jsx';
 import { useI18n } from '../i18n/index.jsx';
-import Icon, { Star } from '../components/Icon.jsx';
+import Icon, { Paw } from '../components/Icon.jsx';
 import { Logo } from '../components/Brand.jsx';
 import LangSwitch from '../components/LangSwitch.jsx';
 
@@ -81,7 +81,7 @@ export default function Login() {
           <Logo size={44} />
         </span>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 480 }}>
-          <Star size={52} color="#F2B33D" />
+          <Paw size={44} color="#F2B33D" />
           <h1 className="display" style={{ margin: 0, fontSize: 'clamp(28px, 3.6vw, 44px)', lineHeight: 1.05 }}>
             {t('login.panel')}
           </h1>

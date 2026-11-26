@@ -22,16 +22,18 @@ const W = 85.6 * MM;
 const H = 54 * MM;
 const C = { forest: '#0A2B1F', pine: '#13402E', gold: '#F2B33D', mint: '#DDEFE4', sage: '#8CC5A6', muted: '#CFE3D7', ink: '#0E1F17', grey: '#4D5E55' };
 
-function star(doc, x, y, s, color) {
-  doc.save().translate(x, y).scale(s / 24)
-    .path('M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z').fill(color).restore();
+function paw(doc, x, y, s, color) {
+  doc.save().translate(x, y).scale(s / 64).fillColor(color);
+  for (const [cx, cy] of [[22.5, 27], [28.6, 21.5], [35.4, 21.5], [41.5, 27]]) doc.circle(cx, cy, 3.6).fill();
+  doc.path('M32 29c5 0 9.5 5.6 9.5 10.3 0 3.2-2.4 4.7-4.8 4.7-1.9 0-3.1-1-4.7-1s-2.8 1-4.7 1c-2.4 0-4.8-1.5-4.8-4.7C22.5 34.6 27 29 32 29Z').fill();
+  doc.restore();
 }
 
 function hexLogo(doc, x, y, size) {
   const k = size / 64;
   doc.save().translate(x, y).scale(k)
     .polygon([32, 3], [60, 17], [60, 46], [32, 63], [4, 46], [4, 17]).lineWidth(3).fillAndStroke(C.pine, C.gold).restore();
-  star(doc, x + 20 * k, y + 21 * k, 24 * k, C.gold);
+  paw(doc, x, y, size, C.gold);
 }
 
 const fmt = (iso) => (iso ? iso : '—');
@@ -57,7 +59,6 @@ export async function renderCardPdf(d) {
 
   // ---------- Frente ----------
   doc.rect(0, 0, W, H).fill(C.forest);
-  for (let i = 0; i < 6; i++) star(doc, W - 30 + (i % 2) * 14, 8 + i * 22, 5, C.pine);
   if (logo) doc.image(logo, 9, 7, { height: 17 });
   else {
     hexLogo(doc, 9, 7, 16);
@@ -120,7 +121,6 @@ export async function renderCardPdf(d) {
     `Carnet propiedad de ${config.brand.name}. La validez se confirma únicamente mediante el código QR. · Property of ${config.brand.name}.`,
     bx, H - 30, { width: bw }
   );
-  star(doc, W - 20, 12, 10, C.gold);
 
   doc.end();
   return done;

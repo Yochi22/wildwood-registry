@@ -36,6 +36,7 @@ const P = {
   refresh: 'M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7',
   trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13',
   phone: 'M7 2.5h10v19H7zM11 18h2',
+  infinity: 'M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z',
 };
 
 export default function Icon({ name, size = 18, stroke = 2, ...rest }) {
@@ -46,10 +47,14 @@ export default function Icon({ name, size = 18, stroke = 2, ...rest }) {
   );
 }
 
-export function Star({ size = 16, color = 'currentColor', ...rest }) {
+export function Paw({ size = 16, color = 'currentColor', ...rest }) {
   return (
-    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" {...rest}>
-      <path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z" fill={color} />
+    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill={color} {...rest}>
+      <circle cx="5" cy="10" r="2.2" />
+      <circle cx="9.3" cy="5.6" r="2.2" />
+      <circle cx="14.7" cy="5.6" r="2.2" />
+      <circle cx="19" cy="10" r="2.2" />
+      <path d="M12 11c3.3 0 6.4 3.8 6.4 6.9 0 2.1-1.6 3.1-3.2 3.1-1.3 0-2.1-.7-3.2-.7s-1.9.7-3.2.7c-1.6 0-3.2-1-3.2-3.1C5.6 14.8 8.7 11 12 11Z" />
     </svg>
   );
 }

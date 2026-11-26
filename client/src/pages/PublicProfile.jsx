@@ -4,11 +4,11 @@ import { api } from '../lib/api.js';
 import { useI18n } from '../i18n/index.jsx';
 import { useBrand, Logo } from '../components/Brand.jsx';
 import LangSwitch from '../components/LangSwitch.jsx';
-import Icon, { DogGlyph, Star } from '../components/Icon.jsx';
+import Icon, { DogGlyph } from '../components/Icon.jsx';
 
 const STYLE = {
   active: { bg: '#DDEFE4', fg: '#1F5E40', icon: 'check' },
-  lifetime: { bg: '#FBE9C2', fg: '#6E4600', icon: 'star' },
+  lifetime: { bg: '#FBE9C2', fg: '#6E4600', icon: 'infinity' },
   pending: { bg: '#DCE8F5', fg: '#1E4E80', icon: 'clock' },
   expired: { bg: '#FBE0D2', fg: '#8F3509', icon: 'alert', stamp: true },
   inactive: { bg: '#E4E7E5', fg: '#2E3632', icon: 'minus', stamp: true },
@@ -80,7 +80,7 @@ export default function PublicProfile() {
       <main className="pub-main">
         <div className="state-banner" style={{ background: s.bg, color: s.fg }} role="status">
           <span className="state-icon" style={{ background: s.fg, color: s.bg }}>
-            {s.icon === 'star' ? <Star size={22} /> : <Icon name={s.icon} size={24} stroke={2.8} />}
+            <Icon name={s.icon} size={24} stroke={2.8} />
           </span>
           <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <span className="display" style={{ fontSize: 22, letterSpacing: '.04em' }}>{t(`states.${state}`)}</span>
@@ -90,7 +90,6 @@ export default function PublicProfile() {
 
         <article className="cred">
           <div className="cred-side">
-            <Star size={44} color="#F2B33D" style={{ position: 'absolute', right: 16, top: 16 }} />
             <div className="cred-photo" role="img" aria-label={t('pub.photoAlt', { name: d.dog_name })} style={{ backgroundImage: d.photo_url ? `url(${d.photo_url})` : undefined, filter: state === 'inactive' ? 'grayscale(1)' : undefined }}>
               {!d.photo_url && <DogGlyph size={80} />}
             </div>
@@ -122,7 +121,7 @@ export default function PublicProfile() {
                 <ul className="task-list">
                   {d.tasks.map((x, i) => (
                     <li key={i}>
-                      <Star size={14} color="#D9682B" style={{ flex: 'none', marginTop: 3 }} />
+                      <Icon name="check" size={16} stroke={3} style={{ flex: 'none', marginTop: 2, color: 'var(--sage)' }} />
                       {x}
                     </li>
                   ))}

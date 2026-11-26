@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/index.jsx';
 import { useToast } from '../components/Toast.jsx';
 import { SPECIALTIES, COUNTRIES, todayISO, addYears, computeState } from '../lib/constants.js';
 import StatusBadge from '../components/StatusBadge.jsx';
-import Icon, { DogGlyph, Star } from '../components/Icon.jsx';
+import Icon, { DogGlyph } from '../components/Icon.jsx';
 
 const EMPTY = {
   dog_name: '', breed: '', microchip: '', owner_name: '', owner_document: '', country: '', specialty: '',
@@ -314,7 +314,6 @@ export default function DogForm() {
           <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '.08em', color: 'var(--muted)', textTransform: 'uppercase' }}>{t('form.preview')}</span>
           <div className="panel" style={{ overflow: 'hidden' }}>
             <div style={{ background: 'var(--forest)', color: '#fff', padding: 16, display: 'flex', gap: 14, alignItems: 'center', position: 'relative' }}>
-              <Star size={24} color="#F2B33D" style={{ position: 'absolute', right: 12, top: 12 }} />
               <div className="photo-box" style={{ width: 64, height: 64, boxShadow: '0 0 0 2px #F2B33D', backgroundImage: photo.url && !photo.remove ? `url(${photo.url})` : undefined }} />
               <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                 <span className="display" style={{ fontSize: 20, overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.dog_name || '—'}</span>

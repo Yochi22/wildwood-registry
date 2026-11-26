@@ -6,7 +6,7 @@ import { useAuth } from '../lib/auth.jsx';
 import { can, addYears, todayISO } from '../lib/constants.js';
 import { useToast } from '../components/Toast.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
-import Icon, { DogGlyph, Star } from '../components/Icon.jsx';
+import Icon, { DogGlyph } from '../components/Icon.jsx';
 import Menu from '../components/Menu.jsx';
 import { ConfirmDialog } from '../components/Dialog.jsx';
 import { whenLabel } from './Dashboard.jsx';
@@ -72,7 +72,7 @@ export default function DogDetail() {
     [t('fields.country'), country(d.country)],
     [t('fields.specialty'), t(`specialties.${d.specialty}`)],
     [t('fields.issueDate'), fmtDate(d.issue_date)],
-    [t('fields.expiryDate'), d.lifetime ? <span style={{ color: '#6e4600', display: 'inline-flex', gap: 6, alignItems: 'center' }}><Star size={12} />{t('states.lifetime')}</span> : fmtDate(d.expiry_date)],
+    [t('fields.expiryDate'), d.lifetime ? <span style={{ color: '#6e4600', display: 'inline-flex', gap: 6, alignItems: 'center' }}><Icon name="infinity" size={15} stroke={2.4} />{t('states.lifetime')}</span> : fmtDate(d.expiry_date)],
   ];
 
   return (
