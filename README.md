@@ -81,4 +81,26 @@ Coloca el logo de Wildwood en PNG con fondo transparente en `DATA_DIR/brand/logo
 
 ### Respaldos
 
-`npm run backup` copia la base de datos (copia consistente, sin detener el servicio) y las fotos a `DATA_DIR/backups/` y conserva los últimos 14. El cron lo ejecuta cada noche. Se recomienda además copiarlos fuera del servidor, por ejemplo a Cloudflare R2 o Backblaze B2 con `rclone`.
+El cron ejecuta `npm run backup` cada noche y respalda en `DATA_DIR/backups/`:
+
+- **Base de datos:** una copia comprimida por día. Se conservan las últimas 14 (`BACKUP_KEEP`).
+- **Fotos:** espejo incremental. Solo se agregan las fotos nuevas; nunca se duplican. En el mismo disco no ocupan espacio extra, y una foto borrada por error sigue en el respaldo.
+
+Espacio aproximado de los respaldos:
+
+| Perros | Fotos | Respaldos en el VPS |
+|---|---|---|
+| 10.000 | ~0,6 GB | ~30 MB (14 copias de la base) |
+| 100.000 | ~6 GB | ~300 MB |
+
+**Copia fuera del servidor (recomendado).** Un respaldo dentro del mismo VPS no sirve si el VPS se pierde. Configura `rclone` con Cloudflare R2 o Backblaze B2 (10 GB gratis en ambos) y define `BACKUP_REMOTE` en `.env`, por ejemplo `BACKUP_REMOTE=r2:wildwood-respaldos`. Desde entonces cada respaldo se sube solo.
+
+**Restaurar:**
+
+```bash
+sudo systemctl stop wildwood-registry
+sudo -u registry npm run restore -- registry-2026-11-26_0317.sqlite.gz
+sudo systemctl start wildwood-registry
+```
+
+`npm run restore` sin argumentos lista los respaldos disponibles. La base anterior se guarda aparte antes de restaurar.
