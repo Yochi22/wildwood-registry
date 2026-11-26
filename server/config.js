@@ -32,6 +32,8 @@ if (!jwtSecret || jwtSecret.length < 32) {
 
 export const config = {
   port: Number(env.PORT || 3001),
+  // Solo accesible desde el propio servidor; el público entra por nginx/Caddy.
+  host: env.HOST || '127.0.0.1',
   dataDir: DATA_DIR,
   dbFile: path.join(DATA_DIR, 'registry.sqlite'),
   uploadsDir: path.join(DATA_DIR, 'uploads'),

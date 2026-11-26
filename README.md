@@ -75,6 +75,24 @@ En el DNS de wildwood-training.com, crea un registro **A** `registry` que apunte
 
 **Actualizar:** `git pull && npm ci && npm run build && sudo systemctl restart wildwood-registry`
 
+### En un VPS que ya tiene otro proyecto (nginx)
+
+El registro corre aislado: tiene su propio usuario del sistema, su propia carpeta, su propio puerto (3001, solo accesible desde el propio servidor) y su propio subdominio y certificado. Además, el servicio tiene topes de memoria y CPU (`MemoryMax=600M`, `CPUQuota=80%`), así que no puede acaparar el servidor.
+
+Pasos 1 a 4 iguales (sin instalar `caddy`). En el paso 5, en lugar de Caddy:
+
+```bash
+sudo cp deploy/wildwood-registry.service /etc/systemd/system/
+sudo systemctl enable --now wildwood-registry
+sudo cp deploy/nginx.conf /etc/nginx/sites-available/wildwood-registry
+sudo ln -s /etc/nginx/sites-available/wildwood-registry /etc/nginx/sites-enabled/
+sudo certbot --nginx -d registry.wildwood-training.com     # obtiene el certificado HTTPS
+sudo nginx -t && sudo systemctl reload nginx                # reload no corta el otro sitio
+sudo cp deploy/backup.cron /etc/cron.d/wildwood-registry
+```
+
+Antes, verifica que el puerto 3001 esté libre (`sudo ss -ltnp | grep 3001`). Si no lo está, cambia `PORT` en `.env` y en `deploy/nginx.conf`.
+
 ### Logo
 
 Coloca el logo de Wildwood en PNG con fondo transparente en `DATA_DIR/brand/logo.png`. Se usa en el panel, en el perfil público y en el carnet PDF. Mientras no exista, se muestra un escudo provisional.

@@ -11,6 +11,10 @@ EnvironmentFile=/opt/wildwood-registry/.env
 ExecStart=/usr/bin/node server/index.js
 Restart=always
 RestartSec=3
+# Límites: aunque comparta VPS con otro proyecto, nunca puede acapararlo.
+MemoryMax=600M
+CPUQuota=80%
+TasksMax=64
 # Endurecimiento
 NoNewPrivileges=true
 PrivateTmp=true

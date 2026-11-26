@@ -3,8 +3,8 @@ import { createApp } from './app.js';
 import { db } from './db.js';
 
 const app = createApp();
-const server = app.listen(config.port, () => {
-  console.log(`[registry] escuchando en http://localhost:${config.port}`);
+const server = app.listen(config.port, config.host, () => {
+  console.log(`[registry] escuchando en http://${config.host}:${config.port}`);
   const users = db.prepare('SELECT COUNT(*) n FROM users').get().n;
   if (!users) console.log('[registry] No hay usuarios. Crea el primer administrador con: npm run user:create');
 });
