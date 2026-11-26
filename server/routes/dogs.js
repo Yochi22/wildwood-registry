@@ -27,9 +27,9 @@ const dogSchema = z
   .object({
     status: z.enum(['active', 'inactive']).default('active'),
     owner_name: z.string().trim().min(2, 'required').max(150),
-    owner_document: optText(60),
     microchip: z.preprocess(
-      (v) => (typeof v === 'string' ? v.replace(/\s+/g, '').trim() || null : v),
+      // Vacío o «N/A» = sin microchip.
+      (v) => (typeof v === 'string' ? (/^(n\/?a)?$/i.test(v.replace(/\s+/g, '')) ? null : v.replace(/\s+/g, '')) : v),
       z.string().regex(/^[A-Za-z0-9.-]{6,30}$/, 'microchip').nullable().optional()
     ),
     dog_name: z.string().trim().min(1, 'required').max(80),
@@ -63,7 +63,6 @@ function parseDog(body) {
         ...d,
         lifetime: d.lifetime ? 1 : 0,
         expiry_date: d.lifetime ? null : d.expiry_date,
-        owner_document: d.owner_document ?? null,
         microchip: d.microchip ?? null,
         breed: d.breed ?? null,
         notes: d.notes ?? null,
@@ -115,7 +114,7 @@ function buildFilter(q) {
   if (q.q) {
     const term = String(q.q).trim().replace(/[%_]/g, '').replace(/\s+/g, ' ');
     if (term) {
-      where.push(`(d.reg_number LIKE @q OR d.dog_name LIKE @q OR d.owner_name LIKE @q OR d.microchip LIKE @qc OR d.breed LIKE @q OR d.owner_document LIKE @q)`);
+      where.push(`(d.reg_number LIKE @q OR d.dog_name LIKE @q OR d.owner_name LIKE @q OR d.microchip LIKE @qc OR d.breed LIKE @q)`);
       params.q = `%${term}%`;
       params.qc = `%${term.replace(/\s/g, '')}%`;
     }
@@ -188,7 +187,7 @@ r.get('/overview', requireRole('viewer'), (_req, res) => {
 r.get('/export.csv', requireRole('editor'), (req, res) => {
   const { sql, params } = buildFilter(req.query);
   const rows = db.prepare(`SELECT d.* FROM dogs d ${sql} ORDER BY ${orderBy(req.query)}`).all(params);
-  const cols = ['reg_number', 'state', 'dog_name', 'breed', 'owner_name', 'owner_document', 'microchip', 'specialty', 'country', 'issue_date', 'expiry_date', 'lifetime', 'tasks', 'created_at'];
+  const cols = ['reg_number', 'state', 'dog_name', 'breed', 'owner_name', 'microchip', 'specialty', 'country', 'issue_date', 'expiry_date', 'lifetime', 'tasks', 'created_at'];
   // Prefijo ' para neutralizar inyección de fórmulas al abrir en Excel.
   const esc = (v) => {
     let s = v == null ? '' : String(v);
@@ -197,7 +196,7 @@ r.get('/export.csv', requireRole('editor'), (req, res) => {
   };
   const lines = [cols.join(';')];
   for (const d of rows) {
-    const row = { ...d, state: computeState(d, params.today), tasks: JSON.parse(d.tasks).join(' | '), lifetime: d.lifetime ? 'yes' : 'no' };
+    const row = { ...d, microchip: d.microchip || 'N/A', state: computeState(d, params.today), tasks: JSON.parse(d.tasks).join(' | '), lifetime: d.lifetime ? 'yes' : 'no' };
     lines.push(cols.map((c) => esc(row[c])).join(';'));
   }
   audit(req, 'export', 'dog', null, { count: rows.length });
@@ -288,8 +287,8 @@ r.post('/', requireRole('editor'), upload.single('photo'), async (req, res) => {
   const reg = generateRegNumber();
   const info = db
     .prepare(
-      `INSERT INTO dogs (reg_number, status, photo, owner_name, owner_document, microchip, dog_name, breed, specialty, country, issue_date, expiry_date, lifetime, tasks, notes, created_by, updated_by)
-       VALUES (@reg, @status, @photo, @owner_name, @owner_document, @microchip, @dog_name, @breed, @specialty, @country, @issue_date, @expiry_date, @lifetime, @tasks, @notes, @uid, @uid)`
+      `INSERT INTO dogs (reg_number, status, photo, owner_name, microchip, dog_name, breed, specialty, country, issue_date, expiry_date, lifetime, tasks, notes, created_by, updated_by)
+       VALUES (@reg, @status, @photo, @owner_name, @microchip, @dog_name, @breed, @specialty, @country, @issue_date, @expiry_date, @lifetime, @tasks, @notes, @uid, @uid)`
     )
     .run({ ...data, reg, photo: photo ?? null, uid: req.user.id });
   audit(req, 'create', 'dog', info.lastInsertRowid, { reg_number: reg });
@@ -307,7 +306,7 @@ r.put('/:id', requireRole('editor'), upload.single('photo'), async (req, res) =>
   if (up.error) return res.status(400).json({ error: 'validation', fields: { photo: 'invalid_image' } });
   const photo = up.photo !== undefined ? up.photo : req.body.remove_photo === '1' ? null : existing.photo;
   db.prepare(
-    `UPDATE dogs SET status=@status, photo=@photo, owner_name=@owner_name, owner_document=@owner_document, microchip=@microchip,
+    `UPDATE dogs SET status=@status, photo=@photo, owner_name=@owner_name, microchip=@microchip,
        dog_name=@dog_name, breed=@breed, specialty=@specialty, country=@country, issue_date=@issue_date,
        expiry_date=@expiry_date, lifetime=@lifetime, tasks=@tasks, notes=@notes, updated_by=@uid, updated_at=datetime('now') WHERE id=@id`
   ).run({ ...data, photo, uid: req.user.id, id });

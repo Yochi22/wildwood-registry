@@ -31,7 +31,6 @@ const migrations = [
      status TEXT NOT NULL CHECK (status IN ('active','inactive')) DEFAULT 'active',
      photo TEXT,
      owner_name TEXT NOT NULL,
-     owner_document TEXT,
      microchip TEXT,
      dog_name TEXT NOT NULL,
      breed TEXT,

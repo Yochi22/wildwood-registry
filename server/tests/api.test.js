@@ -25,7 +25,7 @@ const api = (cookie) => (p, opts = {}) =>
   fetch(`${base}${p}`, { ...opts, headers: { ...H, ...(opts.headers || {}), Cookie: cookie } });
 
 const dog = {
-  dog_name: 'Luna', owner_name: 'María Ríos', owner_document: '1020482K', microchip: '985112003456789',
+  dog_name: 'Luna', owner_name: 'María Ríos', microchip: '985112003456789',
   breed: 'Golden', specialty: 'psychiatric_service', country: 'CO', issue_date: '2026-01-10',
   expiry_date: '2099-01-10', lifetime: false, tasks: ['Tarea uno'], notes: 'secreto interno',
 };
@@ -87,10 +87,15 @@ test('flujo completo: crear, listar, perfil público, QR, PDF, permisos', async 
   const list = await (await a('/api/dogs?q=luna&state=valid')).json();
   assert.equal(list.total, 1);
 
+  const noChip = await a('/api/dogs', { method: 'POST', body: JSON.stringify({ ...dog, microchip: 'N/A', dog_name: 'Toby' }) });
+  const nc = (await noChip.json()).dog;
+  assert.equal(nc.microchip, null);
+  assert.equal((await (await fetch(`${base}/api/public/dogs/${nc.reg_number}`)).json()).dog.microchip, 'N/A');
+
   const pub = await (await fetch(`${base}/api/public/dogs/${d.reg_number}`)).json();
   assert.equal(pub.state, 'active');
   assert.equal(pub.dog.notes, undefined);
-  assert.equal(pub.dog.owner_document, '••••482K');
+  assert.equal(pub.dog.owner_document, undefined);
 
   assert.equal((await fetch(`${base}/api/public/dogs/WWT-2026-NOPE00`)).status, 404);
 

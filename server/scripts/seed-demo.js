@@ -13,8 +13,8 @@ const pick = (a, i) => a[i % a.length];
 const t = today();
 const admin = db.prepare("SELECT id FROM users WHERE role='admin' LIMIT 1").get();
 const ins = db.prepare(
-  `INSERT INTO dogs (reg_number,status,owner_name,owner_document,microchip,dog_name,breed,specialty,country,issue_date,expiry_date,lifetime,tasks,created_by,updated_by,created_at)
-   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+  `INSERT INTO dogs (reg_number,status,owner_name,microchip,dog_name,breed,specialty,country,issue_date,expiry_date,lifetime,tasks,created_by,updated_by,created_at)
+   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 );
 db.transaction(() => {
   for (let i = 0; i < n; i++) {
@@ -23,7 +23,7 @@ db.transaction(() => {
     let expiry = lifetime ? null : addYears(issue, i % 4 === 0 ? 2 : 1);
     if (i % 11 === 0 && !lifetime) expiry = addDays(t, (i % 25) + 1);
     ins.run(
-      generateRegNumber(), i % 13 === 5 ? 'inactive' : 'active', pick(owners, i * 7), `${10200000 + i * 37}K`,
+      generateRegNumber(), i % 13 === 5 ? 'inactive' : 'active', pick(owners, i * 7),
       i % 6 === 3 ? null : String(985112000000000 + i * 7919), pick(dogs, i), pick(breeds, i * 3), pick(SPECIALTIES, i * 5),
       pick(countries, i), issue, expiry, lifetime,
       JSON.stringify(['Interrumpir crisis de ansiedad con presión profunda', 'Recordar la toma de medicación', 'Crear espacio personal en lugares concurridos'].slice(0, (i % 3) + 1)),

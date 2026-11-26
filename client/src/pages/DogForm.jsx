@@ -8,7 +8,7 @@ import StatusBadge from '../components/StatusBadge.jsx';
 import Icon, { DogGlyph } from '../components/Icon.jsx';
 
 const EMPTY = {
-  dog_name: '', breed: '', microchip: '', owner_name: '', owner_document: '', country: '', specialty: '',
+  dog_name: '', breed: '', microchip: '', owner_name: '', country: '', specialty: '',
   issue_date: todayISO(), expiry_date: addYears(todayISO(), 1), lifetime: false, status: 'active', tasks: [], notes: '',
 };
 
@@ -34,7 +34,7 @@ export default function DogForm() {
       .then(({ dog }) => {
         setV({
           dog_name: dog.dog_name, breed: dog.breed || '', microchip: dog.microchip || '', owner_name: dog.owner_name,
-          owner_document: dog.owner_document || '', country: dog.country, specialty: dog.specialty, issue_date: dog.issue_date,
+          country: dog.country, specialty: dog.specialty, issue_date: dog.issue_date,
           expiry_date: dog.expiry_date || '', lifetime: dog.lifetime, status: dog.status, tasks: dog.tasks, notes: dog.notes || '',
           reg_number: dog.reg_number,
         });
@@ -94,7 +94,7 @@ export default function DogForm() {
   async function submit(e) {
     e.preventDefault();
     const form = new FormData();
-    for (const k of ['dog_name', 'breed', 'microchip', 'owner_name', 'owner_document', 'country', 'specialty', 'issue_date', 'status', 'notes']) form.append(k, v[k] ?? '');
+    for (const k of ['dog_name', 'breed', 'microchip', 'owner_name', 'country', 'specialty', 'issue_date', 'status', 'notes']) form.append(k, v[k] ?? '');
     form.append('lifetime', v.lifetime ? 'true' : 'false');
     form.append('expiry_date', v.lifetime ? '' : v.expiry_date || '');
     form.append('tasks', JSON.stringify(v.tasks));
@@ -175,7 +175,7 @@ export default function DogForm() {
                 </div>
                 <div className="field">
                   <label htmlFor="microchip">{t('fields.microchip')}</label>
-                  <input id="microchip" className="input num" inputMode="numeric" value={v.microchip} onChange={set('microchip')} maxLength={40} {...inv('microchip')} />
+                  <input id="microchip" className="input num" inputMode="numeric" value={v.microchip} onChange={set('microchip')} maxLength={40} placeholder="N/A" {...inv('microchip')} />
                   {err('microchip')}
                 </div>
               </div>
@@ -190,10 +190,6 @@ export default function DogForm() {
                   <label htmlFor="owner_name">{t('fields.ownerFull')} *</label>
                   <input id="owner_name" className="input" value={v.owner_name} onChange={set('owner_name')} required maxLength={150} autoComplete="off" {...inv('owner_name')} />
                   {err('owner_name')}
-                </div>
-                <div className="field">
-                  <label htmlFor="owner_document">{t('fields.ownerDocument')}</label>
-                  <input id="owner_document" className="input" value={v.owner_document} onChange={set('owner_document')} maxLength={60} autoComplete="off" />
                 </div>
                 <div className="field">
                   <label htmlFor="country">{t('fields.country')} *</label>

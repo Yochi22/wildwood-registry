@@ -101,7 +101,7 @@ export default function Records() {
         { key: 'dog', header: t('fields.dog'), sortKey: 'dog', render: (d) => <span className="dog-cell nowrap"><DogThumb dog={d} />{d.dog_name}</span> },
         { key: 'breed', header: t('fields.breed'), sortKey: 'breed', render: (d) => <span style={{ color: 'var(--ink-2)' }}>{d.breed}</span> },
         { key: 'owner', header: t('fields.owner'), sortKey: 'owner', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => d.owner_name },
-        { key: 'microchip', header: t('fields.microchip'), sortKey: 'microchip', render: (d) => <span style={{ color: 'var(--ink-2)', whiteSpace: 'nowrap' }}>{d.microchip}</span> },
+        { key: 'microchip', header: t('fields.microchip'), sortKey: 'microchip', render: (d) => <span style={{ color: d.microchip ? 'var(--ink-2)' : 'var(--muted)', whiteSpace: 'nowrap' }}>{d.microchip || 'N/A'}</span> },
         { key: 'specialty', header: t('fields.specialty'), sortKey: 'specialty', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => t(`specialties.${d.specialty}`) },
         { key: 'country', header: t('fields.countryShort'), sortKey: 'country', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => country(d.country) },
         { key: 'issue', header: t('fields.issueShort'), sortKey: 'issue', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => fmtDate(d.issue_date) },

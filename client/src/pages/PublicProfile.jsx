@@ -67,7 +67,6 @@ export default function PublicProfile() {
   const desc = t(`pub.${state}`, { date: fmtLong(state === 'pending' ? d.issue_date : d.expiry_date), brand: brand.name });
   const items = [
     [t('fields.owner'), d.owner_name],
-    [t('fields.ownerDocument'), d.owner_document],
     [t('fields.microchip'), d.microchip],
     [t('fields.country'), country(d.country)],
     [t('fields.issueDate'), fmtLong(d.issue_date)],

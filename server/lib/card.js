@@ -113,10 +113,8 @@ export async function renderCardPdf(d) {
   const bx = qs + 24, bw = W - bx - 10;
   doc.font('black').fontSize(8).fillColor(C.forest).text('VERIFICA ESTA CREDENCIAL EN TIEMPO REAL', bx, 16, { width: bw - 12 });
   doc.font('regular').fontSize(5.6).fillColor(C.grey).text("Scan the QR code to confirm this dog's identity, certified tasks and current validity.", bx, doc.y + 3, { width: bw });
-  if (d.microchip) {
-    doc.font('bold').fontSize(4.6).fillColor(C.grey).text('MICROCHIP', bx, doc.y + 6, { characterSpacing: 0.5 });
-    doc.font('bold').fontSize(7).fillColor(C.ink).text(d.microchip.replace(/(\d{3})(?=\d)/g, '$1 '), bx, doc.y + 1.5, { width: bw });
-  }
+  doc.font('bold').fontSize(4.6).fillColor(C.grey).text('MICROCHIP', bx, doc.y + 6, { characterSpacing: 0.5 });
+  doc.font('bold').fontSize(7).fillColor(C.ink).text(d.microchip ? d.microchip.replace(/(\d{3})(?=\d)/g, '$1 ') : 'N/A', bx, doc.y + 1.5, { width: bw });
   doc.font('regular').fontSize(4.4).fillColor(C.grey).text(
     `Carnet propiedad de ${config.brand.name}. La validez se confirma únicamente mediante el código QR.\nProperty of ${config.brand.name}.`,
     bx, H - 30, { width: bw }

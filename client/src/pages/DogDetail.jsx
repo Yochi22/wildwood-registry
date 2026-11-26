@@ -66,9 +66,8 @@ export default function DogDetail() {
     [t('fields.regNumber'), <span className="code">{d.reg_number}</span>],
     [t('fields.dogName'), d.dog_name],
     [t('fields.breed'), d.breed],
-    [t('fields.microchip'), d.microchip],
+    [t('fields.microchip'), d.microchip || 'N/A'],
     [t('fields.owner'), d.owner_name],
-    [t('fields.ownerDocument'), d.owner_document],
     [t('fields.country'), country(d.country)],
     [t('fields.specialty'), t(`specialties.${d.specialty}`)],
     [t('fields.issueDate'), fmtDate(d.issue_date)],
@@ -175,7 +174,7 @@ export default function DogDetail() {
                       <td><span className={`badge badge-${BADGE[h.action] || 'inactive'}`}>{t(`actions.${h.action}`)}</span></td>
                       <td className="muted">
                         {h.details?.changed?.length
-                          ? h.details.changed.map((c) => t(`fields.${{ dog_name: 'dogName', owner_name: 'owner', owner_document: 'ownerDocument', issue_date: 'issueDate', expiry_date: 'expiryDate' }[c] || c}`)).join(', ')
+                          ? h.details.changed.map((c) => t(`fields.${{ dog_name: 'dogName', owner_name: 'owner', issue_date: 'issueDate', expiry_date: 'expiryDate' }[c] || c}`)).join(', ')
                           : h.details?.expiry_date
                             ? fmtDate(h.details.expiry_date)
                             : ''}
