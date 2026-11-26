@@ -1,0 +1,9 @@
+# /etc/caddy/Caddyfile — Caddy obtiene y renueva el certificado HTTPS solo.
+registry.wildwood-training.com {
+	encode zstd gzip
+	request_body {
+		max_size 10MB
+	}
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	reverse_proxy 127.0.0.1:3001
+}

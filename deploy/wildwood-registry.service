@@ -1,0 +1,22 @@
+# /etc/systemd/system/wildwood-registry.service
+[Unit]
+Description=Wildwood Service Dog Registry
+After=network.target
+
+[Service]
+Type=simple
+User=registry
+WorkingDirectory=/opt/wildwood-registry
+EnvironmentFile=/opt/wildwood-registry/.env
+ExecStart=/usr/bin/node server/index.js
+Restart=always
+RestartSec=3
+# Endurecimiento
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/wildwood-registry
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+# /etc/cron.d/wildwood-registry — respaldo diario a las 03:17
+17 3 * * * registry cd /opt/wildwood-registry && /usr/bin/node --env-file=.env server/scripts/backup.js >> /var/lib/wildwood-registry/backup.log 2>&1
