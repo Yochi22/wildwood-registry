@@ -99,9 +99,9 @@ export default function Records() {
       [
         { key: 'reg', header: t('fields.regNumber'), sortKey: 'reg', render: (d) => <Link to={`/registros/${d.id}`} className="code" style={{ fontSize: 13.5 }}>{d.reg_number}</Link> },
         { key: 'dog', header: t('fields.dog'), sortKey: 'dog', render: (d) => <span className="dog-cell nowrap"><DogThumb dog={d} />{d.dog_name}</span> },
-        { key: 'breed', header: t('fields.breed'), sortKey: 'breed', render: (d) => <span style={{ color: 'var(--ink-2)' }}>{d.breed || '—'}</span> },
+        { key: 'breed', header: t('fields.breed'), sortKey: 'breed', render: (d) => <span style={{ color: 'var(--ink-2)' }}>{d.breed}</span> },
         { key: 'owner', header: t('fields.owner'), sortKey: 'owner', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => d.owner_name },
-        { key: 'microchip', header: t('fields.microchip'), sortKey: 'microchip', render: (d) => <span style={{ color: 'var(--ink-2)', whiteSpace: 'nowrap' }}>{d.microchip || '—'}</span> },
+        { key: 'microchip', header: t('fields.microchip'), sortKey: 'microchip', render: (d) => <span style={{ color: 'var(--ink-2)', whiteSpace: 'nowrap' }}>{d.microchip}</span> },
         { key: 'specialty', header: t('fields.specialty'), sortKey: 'specialty', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => t(`specialties.${d.specialty}`) },
         { key: 'country', header: t('fields.countryShort'), sortKey: 'country', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => country(d.country) },
         { key: 'issue', header: t('fields.issueShort'), sortKey: 'issue', tdStyle: { whiteSpace: 'nowrap' }, render: (d) => fmtDate(d.issue_date) },
@@ -119,15 +119,15 @@ export default function Records() {
           tdStyle: { textAlign: 'right', paddingTop: 4, paddingBottom: 4 },
           render: (d) => (
             <span style={{ display: 'inline-flex', gap: 2 }}>
-              <a className="icon-btn" href={`/api/dogs/${d.id}/qr.png?download=1`} aria-label={`${t('records.downloadQr')} · ${d.dog_name}`} title={t('records.downloadQr')}>
+              <a className="icon-btn" href={`/api/dogs/${d.id}/qr.png?download=1`} aria-label={`${t('records.downloadQr')}: ${d.dog_name}`} title={t('records.downloadQr')}>
                 <Icon name="qr" />
               </a>
               {can(user, 'editor') && (
-                <Link className="icon-btn" to={`/registros/${d.id}/editar`} aria-label={`${t('common.edit')} · ${d.dog_name}`} title={t('common.edit')}>
+                <Link className="icon-btn" to={`/registros/${d.id}/editar`} aria-label={`${t('common.edit')}: ${d.dog_name}`} title={t('common.edit')}>
                   <Icon name="edit" />
                 </Link>
               )}
-              <Menu label={`${t('common.more')} · ${d.dog_name}`} trigger={(p) => <button type="button" className="icon-btn" {...p}><Icon name="dots" size={20} stroke={3} /></button>}>
+              <Menu label={`${t('common.more')}: ${d.dog_name}`} trigger={(p) => <button type="button" className="icon-btn" {...p}><Icon name="dots" size={20} stroke={3} /></button>}>
                 <Link role="menuitem" to={`/registros/${d.id}`}>{t('dog.data')}</Link>
                 <a role="menuitem" href={`/v/${d.reg_number}`} target="_blank" rel="noopener">{t('records.viewProfile')}</a>
                 <a role="menuitem" href={`/api/dogs/${d.id}/card.pdf`}>{t('records.downloadCard')}</a>
@@ -153,9 +153,8 @@ export default function Records() {
           <b style={{ fontSize: 15.5 }}>{d.dog_name}</b>
           <span style={{ fontSize: 12.5, fontWeight: 700, color: d.expiring || d.state === 'expired' ? 'var(--danger)' : 'var(--ink-2)', whiteSpace: 'nowrap' }}>{d.lifetime ? t('states.lifetime') : fmtDate(d.expiry_date)}</span>
         </span>
-        <span style={{ fontSize: 13, color: 'var(--ink-2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          {d.owner_name} · {t(`specialties.${d.specialty}`)}
-        </span>
+        <span style={{ fontSize: 13, color: 'var(--ink-2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.owner_name}</span>
+        <span style={{ fontSize: 12.5, color: 'var(--muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t(`specialties.${d.specialty}`)}</span>
         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginTop: 3 }}>
           <span className="code" style={{ fontSize: 12 }}>{d.reg_number}</span>
           <StatusBadge state={d.state} expiring={d.expiring} />
@@ -196,7 +195,8 @@ export default function Records() {
           </div>
           <button type="button" className="btn btn-sm filters-toggle" style={{ minHeight: 42 }} aria-expanded={showFilters} onClick={() => setShowFilters((x) => !x)}>
             <Icon name="list" size={16} />
-            {t('records.filters')}{[f.state, f.specialty, f.country, f.expires].filter(Boolean).length ? ` · ${[f.state, f.specialty, f.country, f.expires].filter(Boolean).length}` : ''}
+            {t('records.filters')}
+            {[f.state, f.specialty, f.country, f.expires].filter(Boolean).length > 0 && <span className="count">{[f.state, f.specialty, f.country, f.expires].filter(Boolean).length}</span>}
           </button>
           <label className={`filter ${f.state ? 'on' : ''}`}>
             <span>{t('fields.status')}</span>

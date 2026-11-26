@@ -87,7 +87,7 @@ export async function renderCardPdf(d) {
   label(doc, 'GUÍA / HANDLER', tx, 56, tw);
   value(doc, d.owner_name, tx, 61.5, tw);
   label(doc, 'ESPECIALIDAD / SPECIALTY', tx, 72, tw);
-  value(doc, `${es} · ${en}`, tx, 77.5, tw, '#FFFFFF', 6.2);
+  value(doc, `${es} / ${en}`, tx, 77.5, tw, '#FFFFFF', 6.2);
   label(doc, 'EMISIÓN / ISSUED', tx, 88, tw / 2);
   value(doc, fmt(d.issue_date), tx, 93.5, tw / 2);
   label(doc, 'VIGENCIA / VALID TO', tx + tw / 2, 88, tw / 2);
@@ -108,7 +108,7 @@ export async function renderCardPdf(d) {
   const qr = await qrPng(d.reg_number, 600);
   doc.roundedRect(8, 14, qs + 6, qs + 6, 4).lineWidth(1.2).stroke(C.forest);
   doc.image(qr, 11, 17, { width: qs, height: qs });
-  doc.font('black').fontSize(5.5).fillColor(C.forest).text('ESCANEA · SCAN', 8, qs + 25, { width: qs + 6, align: 'center', characterSpacing: 0.6 });
+  doc.font('black').fontSize(5.5).fillColor(C.forest).text('ESCANEA / SCAN', 8, qs + 25, { width: qs + 6, align: 'center', characterSpacing: 0.6 });
 
   const bx = qs + 24, bw = W - bx - 10;
   doc.font('black').fontSize(8).fillColor(C.forest).text('VERIFICA ESTA CREDENCIAL EN TIEMPO REAL', bx, 16, { width: bw - 12 });
@@ -118,7 +118,7 @@ export async function renderCardPdf(d) {
     doc.font('bold').fontSize(7).fillColor(C.ink).text(d.microchip.replace(/(\d{3})(?=\d)/g, '$1 '), bx, doc.y + 1.5, { width: bw });
   }
   doc.font('regular').fontSize(4.4).fillColor(C.grey).text(
-    `Carnet propiedad de ${config.brand.name}. La validez se confirma únicamente mediante el código QR. · Property of ${config.brand.name}.`,
+    `Carnet propiedad de ${config.brand.name}. La validez se confirma únicamente mediante el código QR.\nProperty of ${config.brand.name}.`,
     bx, H - 30, { width: bw }
   );
 

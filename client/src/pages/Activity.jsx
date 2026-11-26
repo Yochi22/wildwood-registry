@@ -32,15 +32,15 @@ export default function Activity() {
     if (a.entity === 'dog' && a.entity_id) return <Link to={`/registros/${a.entity_id}`} className="code">{reg || `#${a.entity_id}`}</Link>;
     if (a.entity === 'user') return <span className="muted">{a.details?.email || ''}</span>;
     if (a.details?.count != null) return <span className="muted num">{a.details.count}</span>;
-    return '—';
+    return null;
   };
 
   const columns = [
     { key: 'date', header: t('activity.date'), tdStyle: { whiteSpace: 'nowrap' }, render: (a) => <span className="num">{fmtDateTime(a.created_at)}</span> },
-    { key: 'user', header: t('activity.user'), render: (a) => <b>{a.user_name || a.user_email || '—'}</b> },
+    { key: 'user', header: t('activity.user'), render: (a) => <b>{a.user_name || a.user_email || ''}</b> },
     { key: 'action', header: t('activity.action'), render: (a) => t(`actions.${a.action}`) },
     { key: 'record', header: t('activity.record'), render: record },
-    { key: 'ip', header: t('activity.ip'), render: (a) => <span className="muted num">{a.ip || '—'}</span> },
+    { key: 'ip', header: t('activity.ip'), render: (a) => <span className="muted num">{a.ip || ''}</span> },
   ];
 
   return (
@@ -70,11 +70,11 @@ export default function Activity() {
           rows={data.items}
           loading={loading}
           minWidth={720}
-          empty="—"
+          empty={t('common.noData')}
           renderMobile={(a) => (
             <div className="mobile-row" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 2 }}>
               <span style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
-                <b>{a.user_name || a.user_email || '—'}</b>
+                <b>{a.user_name || a.user_email || ''}</b>
                 <span className="muted num" style={{ fontSize: 12.5 }}>{fmtDateTime(a.created_at)}</span>
               </span>
               <span style={{ fontSize: 13.5 }}>{t(`actions.${a.action}`)} {record(a)}</span>

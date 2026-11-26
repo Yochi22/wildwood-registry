@@ -26,7 +26,7 @@ export default function PublicProfile() {
     api(`/api/public/dogs/${encodeURIComponent(code)}`)
       .then((r) => {
         setData(r);
-        document.title = `${r.dog.dog_name} · ${r.dog.reg_number}`;
+        document.title = `${r.dog.dog_name} ${r.dog.reg_number}`;
       })
       .catch(() => setMissing(true));
   }, [code]);
@@ -145,8 +145,10 @@ export default function PublicProfile() {
             </div>
           )}
         </article>
-        <p className="muted" style={{ margin: 0, fontSize: 12.5, textAlign: 'center' }}>
-          {t('pub.checked', { date: fmtDateTime(data.checkedAt) })} · {t('pub.footer', { brand: brand.name })}
+        <p className="muted" style={{ margin: 0, fontSize: 12.5, textAlign: 'center', lineHeight: 1.6 }}>
+          {t('pub.checked', { date: fmtDateTime(data.checkedAt) })}
+          <br />
+          {t('pub.footer', { brand: brand.name })}
         </p>
       </main>
     </div>

@@ -60,11 +60,11 @@ export function I18nProvider({ children }) {
       locale,
       setLang,
       t,
-      fmtDate: (iso) => (iso ? dateFmt.format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)) : '—'),
-      fmtLong: (iso) => (iso ? longFmt.format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)) : '—'),
-      fmtDateTime: (s) => (s ? dtFmt.format(new Date(s.includes('T') ? s : `${s.replace(' ', 'T')}Z`)) : '—'),
+      fmtDate: (iso) => (iso ? dateFmt.format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)) : ''),
+      fmtLong: (iso) => (iso ? longFmt.format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)) : ''),
+      fmtDateTime: (s) => (s ? dtFmt.format(new Date(s.includes('T') ? s : `${s.replace(' ', 'T')}Z`)) : ''),
       fmtNum: (n) => numFmt.format(n),
-      country: (code) => (code ? regions?.of(code) || code : '—'),
+      country: (code) => (code ? regions?.of(code) || code : ''),
       monthShort: (ym) => new Intl.DateTimeFormat(locale, { month: 'short', timeZone: 'UTC' }).format(new Date(`${ym}-01T00:00:00Z`)),
     };
   }, [lang, setLang]);

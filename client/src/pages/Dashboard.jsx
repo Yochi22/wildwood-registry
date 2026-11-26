@@ -134,7 +134,7 @@ export default function Dashboard() {
         <section className="panel">
           <div className="panel-head">
             <h2>{t('dashboard.issued')}</h2>
-            <span className="muted num" style={{ fontSize: 13 }}>{t('dashboard.last12', { n: fmtNum(total12) })}</span>
+            <span className="muted" style={{ fontSize: 13 }}>{t('dashboard.last12')} <b className="num" style={{ color: 'var(--ink)' }}>{fmtNum(total12)}</b></span>
           </div>
           <div className="panel-body">
             <div role="img" aria-label={months.map((m) => `${monthShort(m.k)}: ${m.n}`).join(', ')} style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 190, borderBottom: '1px solid var(--line-strong)' }}>
@@ -171,7 +171,7 @@ export default function Dashboard() {
               <tbody>
                 {data.activity.map((a) => (
                   <tr key={a.id}>
-                    <td style={{ fontWeight: 700, whiteSpace: 'nowrap' }}>{a.user_name || '—'}</td>
+                    <td style={{ fontWeight: 700, whiteSpace: 'nowrap' }}>{a.user_name}</td>
                     <td>
                       <span className={`badge badge-${ACTION_BADGE[a.action] || 'inactive'}`}>{t(`actions.${a.action}`)}</span>
                     </td>
@@ -181,7 +181,7 @@ export default function Dashboard() {
                           {a.dog_name} <span className="code" style={{ fontSize: 12 }}>{a.reg_number}</span>
                         </Link>
                       ) : (
-                        <span className="code" style={{ fontSize: 12 }}>{a.reg_number || '—'}</span>
+                        <span className="code" style={{ fontSize: 12 }}>{a.reg_number}</span>
                       )}
                     </td>
                     <td className="muted num" style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>{fmtDateTime(a.created_at)}</td>

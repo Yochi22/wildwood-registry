@@ -93,9 +93,8 @@ export default function DogDetail() {
             <StatusBadge state={d.state} expiring={d.expiring} />
             {d.state === 'active' && <span className="muted" style={{ fontSize: 13, fontWeight: 600 }}>{t('dog.expiresIn', { when: whenLabel(t, d.days_left) })}</span>}
           </div>
-          <span style={{ color: 'var(--ink-2)' }}>
-            {[d.breed, t(`specialties.${d.specialty}`), d.owner_name].filter(Boolean).join(' · ')}
-          </span>
+          <span style={{ color: 'var(--ink-2)' }}>{[d.breed, t(`specialties.${d.specialty}`)].filter(Boolean).join(', ')}</span>
+          <span style={{ color: 'var(--ink-2)' }}>{t('fields.owner')}: <b style={{ color: 'var(--ink)' }}>{d.owner_name}</b></span>
           <span className="code">{d.reg_number}</span>
         </div>
         {editor && (
@@ -136,7 +135,7 @@ export default function DogDetail() {
                 {rows.map(([k, v]) => (
                   <tr key={k}>
                     <th scope="row">{k}</th>
-                    <td>{v || '—'}</td>
+                    <td>{v}</td>
                   </tr>
                 ))}
               </tbody>
@@ -144,7 +143,7 @@ export default function DogDetail() {
           </section>
 
           <section className="panel">
-            <div className="panel-head"><h2>{t('dog.tasks')} · {d.tasks.length}</h2></div>
+            <div className="panel-head"><h2>{t('dog.tasks')}</h2><span className="count">{d.tasks.length}</span></div>
             {d.tasks.length ? (
               <ol style={{ margin: 0, padding: '8px 16px 10px 38px', lineHeight: 1.5 }}>
                 {d.tasks.map((x, i) => (
@@ -172,7 +171,7 @@ export default function DogDetail() {
                   {data.history.map((h, i) => (
                     <tr key={i}>
                       <td className="num" style={{ whiteSpace: 'nowrap' }}>{fmtDateTime(h.created_at)}</td>
-                      <td style={{ fontWeight: 600 }}>{h.user_name || '—'}</td>
+                      <td style={{ fontWeight: 600 }}>{h.user_name}</td>
                       <td><span className={`badge badge-${BADGE[h.action] || 'inactive'}`}>{t(`actions.${h.action}`)}</span></td>
                       <td className="muted">
                         {h.details?.changed?.length
@@ -191,7 +190,7 @@ export default function DogDetail() {
 
         <aside style={{ flex: '1 1 280px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 18 }}>
           <section className="qr-panel" aria-label={t('dog.qr')}>
-            <img src={`/api/dogs/${d.id}/qr.svg`} alt={`${t('dog.qr')} · ${d.reg_number}`} />
+            <img src={`/api/dogs/${d.id}/qr.svg`} alt={`${t('dog.qr')} ${d.reg_number}`} />
             <span style={{ fontSize: 12.5, color: '#cfe3d7', wordBreak: 'break-all', textAlign: 'center' }}>{d.profile_url}</span>
             <div className="qr-actions">
               <a className="btn" href={`/api/dogs/${d.id}/qr.png?download=1`}>PNG</a>
@@ -205,7 +204,6 @@ export default function DogDetail() {
                 {t('dog.copyLink')}
               </button>
               <a className="btn btn-line" href={`/v/${d.reg_number}`} target="_blank" rel="noopener">
-                <Icon name="external" size={16} />
                 {t('dog.openProfile')}
               </a>
             </div>

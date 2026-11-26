@@ -104,13 +104,13 @@ export default function Users() {
     !u.active ? <span className="badge badge-inactive">{t('users.disabled')}</span> : isLocked(u) ? <span className="badge badge-expired">{t('users.locked')}</span> : <span className="badge badge-active">{t('users.active')}</span>;
 
   const columns = [
-    { key: 'name', header: t('users.name'), render: (u) => <span className="dog-cell"><span className="dog-thumb">{initials(u.name)}</span>{u.name}{u.id === me.id && <span className="muted" style={{ fontWeight: 500 }}>·</span>}</span> },
+    { key: 'name', header: t('users.name'), render: (u) => <span className="dog-cell"><span className="dog-thumb">{initials(u.name)}</span>{u.name}</span> },
     { key: 'email', header: t('users.email') },
     { key: 'role', header: t('users.role'), render: (u) => t(`roles.${u.role}`) },
-    { key: 'totp', header: t('users.twoFA'), render: (u) => (u.totp_enabled ? <Icon name="check" size={16} stroke={3} style={{ color: 'var(--sage)' }} /> : '—') },
+    { key: 'totp', header: t('users.twoFA'), render: (u) => (u.totp_enabled ? <Icon name="check" size={16} stroke={3} style={{ color: 'var(--sage)' }} /> : null) },
     { key: 'last', header: t('users.lastLogin'), tdStyle: { whiteSpace: 'nowrap' }, render: (u) => (u.last_login_at ? fmtDateTime(u.last_login_at) : t('users.never')) },
     { key: 'status', header: t('users.status'), render: status },
-    { key: 'edit', header: <span className="sr-only">{t('common.actions')}</span>, tdStyle: { textAlign: 'right' }, render: (u) => <button type="button" className="icon-btn" onClick={() => setEditing(u)} aria-label={`${t('common.edit')} · ${u.name}`}><Icon name="edit" /></button> },
+    { key: 'edit', header: <span className="sr-only">{t('common.actions')}</span>, tdStyle: { textAlign: 'right' }, render: (u) => <button type="button" className="icon-btn" onClick={() => setEditing(u)} aria-label={`${t('common.edit')}: ${u.name}`}><Icon name="edit" /></button> },
   ];
 
   return (
@@ -129,14 +129,15 @@ export default function Users() {
           rows={items}
           loading={loading}
           minWidth={820}
-          empty="—"
+          empty={t('common.noData')}
           onRowClick={setEditing}
           renderMobile={(u) => (
             <button type="button" className="mobile-row" style={{ width: '100%', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer' }} onClick={() => setEditing(u)}>
               <span className="dog-thumb" style={{ width: 40, height: 40 }}>{initials(u.name)}</span>
               <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
                 <b>{u.name}</b>
-                <span className="muted" style={{ fontSize: 13 }}>{u.email} · {t(`roles.${u.role}`)}</span>
+                <span className="muted" style={{ fontSize: 13 }}>{u.email}</span>
+                <span className="muted" style={{ fontSize: 12.5 }}>{t(`roles.${u.role}`)}</span>
               </span>
               {status(u)}
             </button>

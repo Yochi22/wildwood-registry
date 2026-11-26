@@ -316,7 +316,7 @@ export default function DogForm() {
             <div style={{ background: 'var(--forest)', color: '#fff', padding: 16, display: 'flex', gap: 14, alignItems: 'center', position: 'relative' }}>
               <div className="photo-box" style={{ width: 64, height: 64, boxShadow: '0 0 0 2px #F2B33D', backgroundImage: photo.url && !photo.remove ? `url(${photo.url})` : undefined }} />
               <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-                <span className="display" style={{ fontSize: 20, overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.dog_name || '—'}</span>
+                <span className="display" style={{ fontSize: 20, overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.dog_name}</span>
                 <span style={{ fontSize: 13, color: '#cfe3d7' }}>{v.breed}</span>
               </span>
             </div>
@@ -325,8 +325,8 @@ export default function DogForm() {
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13.5 }}>
                 <tbody>
                   {[
-                    [t('fields.owner'), v.owner_name || '—'],
-                    [t('fields.specialty'), v.specialty ? t(`specialties.${v.specialty}`) : '—'],
+                    [t('fields.owner'), v.owner_name],
+                    [t('fields.specialty'), v.specialty ? t(`specialties.${v.specialty}`) : ''],
                     [t('fields.expiryShort'), v.lifetime ? t('states.lifetime') : fmtDate(v.expiry_date)],
                     [t('fields.tasks'), v.tasks.length],
                   ].map(([k, val]) => (
