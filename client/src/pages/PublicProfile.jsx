@@ -95,8 +95,8 @@ export default function PublicProfile() {
 
         <article className="cred">
           <div className="cred-side">
-            <div className="cred-photo" role="img" aria-label={t('pub.photoAlt', { name: d.dog_name })} style={{ backgroundImage: d.photo_url ? `url(${d.photo_url})` : undefined, filter: state === 'inactive' ? 'grayscale(1)' : undefined }}>
-              {!d.photo_url && <DogGlyph size={80} />}
+            <div className="cred-photo" style={{ filter: state === 'inactive' ? 'grayscale(1)' : undefined }}>
+              {d.photo_url ? <img src={d.photo_url} alt={t('pub.photoAlt', { name: d.dog_name })} /> : <DogGlyph size={80} />}
             </div>
             <div>
               <h1 className="display" style={{ margin: 0, fontSize: 30, lineHeight: 1.05 }}>{d.dog_name}</h1>
