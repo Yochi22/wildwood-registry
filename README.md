@@ -155,7 +155,28 @@ Espacio aproximado de los respaldos:
 | 10.000 | ~0,6 GB | ~30 MB (14 copias de la base) |
 | 100.000 | ~6 GB | ~300 MB |
 
-**Copia fuera del servidor (recomendado).** Un respaldo dentro del mismo VPS no sirve si el VPS se pierde. Configura `rclone` con Cloudflare R2 o Backblaze B2 (10 GB gratis en ambos) y define `BACKUP_REMOTE` en `.env`, por ejemplo `BACKUP_REMOTE=r2:wildwood-respaldos`. Desde entonces cada respaldo se sube solo.
+**Copia fuera del servidor (recomendado).** Un respaldo dentro del mismo VPS no sirve si el VPS se pierde. Con Backblaze B2 (10 GB gratis):
+
+1. En backblaze.com crea un *bucket* **privado** (ej. `wildwood-registry-respaldos`). En su configuración, en *Lifecycle Settings*, elige «Keep only the last version of the file».
+2. En *Application Keys*, crea una llave limitada a ese bucket, con permiso de lectura y escritura. Copia el `keyID` y la `applicationKey`, que solo se muestran una vez.
+3. En el VPS:
+
+```bash
+sudo apt install -y rclone
+sudo -u registry rclone config create b2 b2 account TU_KEY_ID key TU_APPLICATION_KEY --config /var/lib/wildwood-registry/rclone.conf
+sudo chmod 600 /var/lib/wildwood-registry/rclone.conf
+```
+
+4. En `.env`, define `BACKUP_REMOTE=b2:wildwood-registry-respaldos` y `RCLONE_CONFIG=/var/lib/wildwood-registry/rclone.conf`.
+5. Prueba: `sudo -u registry node --env-file=.env server/scripts/backup.js` (debe terminar con «subido a b2:…»).
+
+**Recuperar todo en un servidor nuevo** si el VPS se pierde: instala la app como arriba, configura rclone con la misma llave y ejecuta:
+
+```bash
+sudo -u registry rclone copy b2:wildwood-registry-respaldos/photos /var/lib/wildwood-registry/backups/photos --config /var/lib/wildwood-registry/rclone.conf
+sudo -u registry rclone copy b2:wildwood-registry-respaldos/db /var/lib/wildwood-registry/backups/db --config /var/lib/wildwood-registry/rclone.conf
+sudo -u registry npm run restore -- NOMBRE_DEL_ULTIMO_ARCHIVO.sqlite.gz
+```
 
 **Restaurar:**
 
