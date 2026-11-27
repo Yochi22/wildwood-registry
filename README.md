@@ -75,6 +75,15 @@ sudo cp deploy/Caddyfile /etc/caddy/Caddyfile && sudo systemctl reload caddy
 sudo cp deploy/backup.cron /etc/cron.d/wildwood-registry
 ```
 
+**VPS tipo contenedor.** Si `systemd-detect-virt` responde `lxc` u `openvz`, instala también este ajuste antes de iniciar el servicio:
+
+```bash
+sudo mkdir -p /etc/systemd/system/wildwood-registry.service.d
+sudo cp deploy/lxc.conf /etc/systemd/system/wildwood-registry.service.d/lxc.conf
+```
+
+En estos VPS, `ufw` puede fallar. Si falla, omítelo: la app solo escucha en `127.0.0.1` y hacia fuera solo responden SSH (22) y Caddy (80/443).
+
 **Llave de despliegue** (para clonar un repositorio privado). En el VPS, con tu usuario:
 
 ```bash
