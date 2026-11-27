@@ -10,12 +10,13 @@ import Icon, { DogGlyph } from '../components/Icon.jsx';
 import Menu from '../components/Menu.jsx';
 import { ConfirmDialog } from '../components/Dialog.jsx';
 import { whenLabel } from './Dashboard.jsx';
+import { taskText } from '../lib/tasks.js';
 
 const BADGE = { create: 'active', update: 'pending', renew: 'lifetime', activate: 'active', deactivate: 'inactive' };
 
 export default function DogDetail() {
   const { id } = useParams();
-  const { t, fmtDate, fmtDateTime, country } = useI18n();
+  const { t, fmtDate, fmtDateTime, country, lang } = useI18n();
   const { user } = useAuth();
   const toast = useToast();
   const nav = useNavigate();
@@ -146,7 +147,7 @@ export default function DogDetail() {
             {d.tasks.length ? (
               <ol style={{ margin: 0, padding: '8px 16px 10px 38px', lineHeight: 1.5 }}>
                 {d.tasks.map((x, i) => (
-                  <li key={i} style={{ padding: '5px 0' }}>{x}</li>
+                  <li key={i} style={{ padding: '5px 0' }}>{taskText(x, lang)}</li>
                 ))}
               </ol>
             ) : (

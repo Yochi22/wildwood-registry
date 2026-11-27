@@ -8,6 +8,7 @@ import { generateRegNumber } from '../lib/regnumber.js';
 import { saveDogPhoto, deletePhoto } from '../lib/images.js';
 import { today, addDays, addYears, computeState, daysUntil, STATE_SQL, EXPIRING_DAYS } from '../lib/status.js';
 import { qrSvg, qrPng, profileUrl } from '../lib/qr.js';
+import { isCatalogTask, catalogHas, taskText } from '../lib/tasks.js';
 import { renderCardPdf } from '../lib/card.js';
 
 const r = Router();
@@ -41,7 +42,7 @@ const dogSchema = z
     expiry_date: z.preprocess((v) => (v === '' ? null : v), date.nullable().optional()),
     tasks: z.preprocess(
       (v) => (typeof v === 'string' ? JSON.parse(v || '[]') : v),
-      z.array(z.string().trim().min(1).max(200)).max(40)
+      z.array(z.string().trim().min(1).max(200).refine((t) => !isCatalogTask(t) || catalogHas(t), 'invalid')).max(40)
     ),
     notes: optText(2000),
   })
@@ -196,7 +197,7 @@ r.get('/export.csv', requireRole('editor'), (req, res) => {
   };
   const lines = [cols.join(';')];
   for (const d of rows) {
-    const row = { ...d, microchip: d.microchip || 'N/A', state: computeState(d, params.today), tasks: JSON.parse(d.tasks).join(' | '), lifetime: d.lifetime ? 'yes' : 'no' };
+    const row = { ...d, microchip: d.microchip || 'N/A', state: computeState(d, params.today), tasks: JSON.parse(d.tasks).map((x) => taskText(x, 'es')).join(' | '), lifetime: d.lifetime ? 'yes' : 'no' };
     lines.push(cols.map((c) => esc(row[c])).join(';'));
   }
   audit(req, 'export', 'dog', null, { count: rows.length });

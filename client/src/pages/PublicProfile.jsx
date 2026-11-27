@@ -4,6 +4,7 @@ import { api } from '../lib/api.js';
 import { useI18n } from '../i18n/index.jsx';
 import { useBrand, Logo } from '../components/Brand.jsx';
 import LangSwitch from '../components/LangSwitch.jsx';
+import { taskText } from '../lib/tasks.js';
 import Icon, { DogGlyph } from '../components/Icon.jsx';
 
 const STYLE = {
@@ -16,7 +17,7 @@ const STYLE = {
 
 export default function PublicProfile() {
   const { code } = useParams();
-  const { t, fmtLong, fmtDateTime, country } = useI18n();
+  const { t, fmtLong, fmtDateTime, country, lang } = useI18n();
   const { brand } = useBrand();
   const [data, setData] = useState(null);
   const [missing, setMissing] = useState(false);
@@ -127,7 +128,7 @@ export default function PublicProfile() {
                   {d.tasks.map((x, i) => (
                     <li key={i}>
                       <Icon name="check" size={16} stroke={3} style={{ flex: 'none', marginTop: 2, color: 'var(--sage)' }} />
-                      {x}
+                      {taskText(x, lang)}
                     </li>
                   ))}
                 </ul>

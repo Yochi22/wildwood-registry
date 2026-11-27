@@ -39,9 +39,8 @@ export function I18nProvider({ children }) {
 
   const value = useMemo(() => {
     const locale = LOCALES[lang];
-    // Francés y portugués usan las sugerencias en inglés.
     const t = (key, vars) => {
-      let s = lookup(DICTS[lang], key) ?? (key.startsWith('suggestions.') ? lookup(en, key) : undefined) ?? lookup(es, key) ?? key;
+      let s = lookup(DICTS[lang], key) ?? lookup(es, key) ?? key;
       if (typeof s === 'string' && vars) s = s.replace(/\{(\w+)\}/g, (_, k) => (vars[k] ?? ''));
       return s;
     };

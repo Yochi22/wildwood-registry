@@ -1,0 +1,120 @@
+{
+  "_info": "Catálogo oficial de tareas por diagnóstico. En la base de datos se guarda la clave (@diagnostico.n) y se muestra traducida. Para agregar tareas, añade entradas nuevas con un id nuevo; no cambies los id existentes.",
+  "diagnoses": [
+    {
+      "id": "syncope",
+      "label": { "es": "Síncope", "en": "Syncope", "fr": "Syncope", "pt": "Síncope" },
+      "tasks": [
+        {
+          "id": "@syncope.1",
+          "es": "Detectar cambios en los niveles de presión arterial y/u otros cambios neuroquímicos relevantes.",
+          "en": "Detect changes in blood pressure levels and/or other relevant neurochemical changes.",
+          "fr": "Détecter les variations de la tension artérielle et/ou d’autres changements neurochimiques significatifs.",
+          "pt": "Detectar alterações nos níveis de pressão arterial e/ou outras alterações neuroquímicas relevantes."
+        },
+        {
+          "id": "@syncope.2",
+          "es": "Lamer la mano de su dueño para alertar sobre los síntomas tempranos del síncope vasovagal en su cuerpo.",
+          "en": "Lick the owner’s hand to alert them to the early symptoms of vasovagal syncope.",
+          "fr": "Lécher la main de son maître pour l’alerter des premiers symptômes d’une syncope vasovagale.",
+          "pt": "Lamber a mão do tutor para alertar sobre os sintomas iniciais da síncope vasovagal."
+        },
+        {
+          "id": "@syncope.3",
+          "es": "En caso de desmayo, alertar a través de ladrido sobre la situación para buscar ayuda.",
+          "en": "In the event of fainting, bark to alert others to the situation and seek help.",
+          "fr": "En cas d’évanouissement, aboyer pour signaler la situation et obtenir de l’aide.",
+          "pt": "Em caso de desmaio, latir para alertar sobre a situação e buscar ajuda."
+        }
+      ]
+    },
+    {
+      "id": "hearing_loss",
+      "label": { "es": "Hipoacusia", "en": "Hearing loss", "fr": "Hypoacousie", "pt": "Hipoacusia" },
+      "tasks": [
+        {
+          "id": "@hearing_loss.1",
+          "es": "Identificar y alertar sobre sonidos importantes como timbres, alarmas o teléfonos.",
+          "en": "Identify and alert to important sounds such as doorbells, alarms or telephones.",
+          "fr": "Identifier et signaler les sons importants comme les sonnettes, les alarmes ou les téléphones.",
+          "pt": "Identificar e alertar sobre sons importantes como campainhas, alarmes ou telefones."
+        },
+        {
+          "id": "@hearing_loss.2",
+          "es": "Advertir mediante contacto físico, como tocar con la pata o el hocico, para notificar la presencia de un sonido relevante.",
+          "en": "Give notice through physical contact, such as touching with a paw or the nose, to signal a relevant sound.",
+          "fr": "Avertir par un contact physique, comme toucher avec la patte ou la truffe, pour signaler un son important.",
+          "pt": "Avisar por contato físico, como tocar com a pata ou o focinho, para indicar a presença de um som relevante."
+        },
+        {
+          "id": "@hearing_loss.3",
+          "es": "Guiar a su dueño hacia la fuente del sonido cuando sea necesario para garantizar su seguridad y autonomía.",
+          "en": "Guide the owner to the source of the sound when needed to ensure their safety and independence.",
+          "fr": "Guider son maître vers la source du son si nécessaire, pour garantir sa sécurité et son autonomie.",
+          "pt": "Guiar o tutor até a fonte do som quando necessário, para garantir sua segurança e autonomia."
+        }
+      ]
+    },
+    {
+      "id": "anxiety",
+      "label": { "es": "Ansiedad", "en": "Anxiety", "fr": "Anxiété", "pt": "Ansiedade" },
+      "tasks": [
+        {
+          "id": "@anxiety.1",
+          "es": "Detectar cambios en la respiración, ritmo cardíaco y/u otros indicadores físicos de ansiedad o pánico.",
+          "en": "Detect changes in breathing, heart rate and/or other physical indicators of anxiety or panic.",
+          "fr": "Détecter les changements de respiration, de rythme cardiaque et/ou d’autres signes physiques d’anxiété ou de panique.",
+          "pt": "Detectar alterações na respiração, frequência cardíaca e/ou outros indicadores físicos de ansiedade ou pânico."
+        },
+        {
+          "id": "@anxiety.2",
+          "es": "Acercarse a su dueño y hacer contacto físico para alertar sobre los síntomas tempranos de ansiedad o pánico.",
+          "en": "Approach the owner and make physical contact to alert them to the early symptoms of anxiety or panic.",
+          "fr": "S’approcher de son maître et établir un contact physique pour l’alerter des premiers symptômes d’anxiété ou de panique.",
+          "pt": "Aproximar-se do tutor e fazer contato físico para alertar sobre os sintomas iniciais de ansiedade ou pânico."
+        },
+        {
+          "id": "@anxiety.3",
+          "es": "En caso de un episodio de ansiedad o ataque de pánico, aplicar presión corporal controlada para inducir calma y reducir los síntomas.",
+          "en": "During an anxiety episode or panic attack, apply controlled body pressure to induce calm and reduce symptoms.",
+          "fr": "Lors d’un épisode d’anxiété ou d’une crise de panique, exercer une pression corporelle contrôlée pour apaiser et réduire les symptômes.",
+          "pt": "Em caso de episódio de ansiedade ou ataque de pânico, aplicar pressão corporal controlada para induzir calma e reduzir os sintomas."
+        },
+        {
+          "id": "@anxiety.4",
+          "es": "Mantenerse junto a su dueño, proporcionando apoyo constante hasta que los síntomas disminuyan.",
+          "en": "Stay by the owner’s side, providing constant support until the symptoms subside.",
+          "fr": "Rester aux côtés de son maître en lui apportant un soutien constant jusqu’à ce que les symptômes diminuent.",
+          "pt": "Permanecer junto ao tutor, oferecendo apoio constante até que os sintomas diminuam."
+        }
+      ]
+    },
+    {
+      "id": "depression",
+      "label": { "es": "Depresión", "en": "Depression", "fr": "Dépression", "pt": "Depressão" },
+      "tasks": [
+        {
+          "id": "@depression.1",
+          "es": "Alertar mediante señales específicas (como tocar con la pata o dar ladridos suaves) cuando sea el momento de tomar la medicación.",
+          "en": "Use specific signals (such as touching with a paw or soft barks) to alert the owner when it is time to take medication.",
+          "fr": "Signaler par des signaux précis (comme toucher avec la patte ou aboyer doucement) le moment de prendre le traitement.",
+          "pt": "Alertar por meio de sinais específicos (como tocar com a pata ou latidos suaves) quando for hora de tomar a medicação."
+        },
+        {
+          "id": "@depression.2",
+          "es": "Detectar signos tempranos de episodios depresivos, como cambios en el ánimo o comportamiento, y alertar a su dueño o a un cuidador mediante señales preestablecidas.",
+          "en": "Detect early signs of depressive episodes, such as changes in mood or behavior, and alert the owner or a caregiver using pre-established signals.",
+          "fr": "Détecter les premiers signes d’épisodes dépressifs, comme des changements d’humeur ou de comportement, et alerter son maître ou un aidant par des signaux convenus.",
+          "pt": "Detectar sinais iniciais de episódios depressivos, como mudanças de humor ou comportamento, e alertar o tutor ou um cuidador por meio de sinais preestabelecidos."
+        },
+        {
+          "id": "@depression.3",
+          "es": "Responder a comportamientos indicativos de depresión con acciones, como acercarse para brindar compañía o realizar actividades que ayuden a mejorar el estado de ánimo.",
+          "en": "Respond to behaviors indicative of depression with actions such as coming close to offer company or engaging in activities that help improve mood.",
+          "fr": "Réagir aux comportements révélateurs de dépression, par exemple en s’approchant pour tenir compagnie ou en proposant des activités qui améliorent l’humeur.",
+          "pt": "Responder a comportamentos indicativos de depressão com ações, como aproximar-se para fazer companhia ou realizar atividades que ajudem a melhorar o humor."
+        }
+      ]
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import { useI18n } from '../i18n/index.jsx';
 import { useToast } from '../components/Toast.jsx';
 import { SPECIALTIES, COUNTRIES, todayISO, addYears, computeState } from '../lib/constants.js';
 import StatusBadge from '../components/StatusBadge.jsx';
+import { DIAGNOSES, taskText } from '../lib/tasks.js';
 import Icon, { DogGlyph } from '../components/Icon.jsx';
 
 const EMPTY = {
@@ -15,7 +16,7 @@ const EMPTY = {
 export default function DogForm() {
   const { id } = useParams();
   const editing = !!id;
-  const { t, fmtDate, country, locale } = useI18n();
+  const { t, fmtDate, country, locale, lang } = useI18n();
   const toast = useToast();
   const nav = useNavigate();
   const [v, setV] = useState(EMPTY);
@@ -76,6 +77,8 @@ export default function DogForm() {
     setErrors((er) => ({ ...er, photo: undefined }));
   }
 
+  const addDiagnosis = (d) => setV((x) => ({ ...x, tasks: [...x.tasks, ...d.tasks.map((k) => k.id).filter((id) => !x.tasks.includes(id))] }));
+
   function addTask(text) {
     const s = (text ?? task).trim();
     if (!s || v.tasks.includes(s)) return;
@@ -119,7 +122,6 @@ export default function DogForm() {
   const err = (k) => errors[k] && <span className="error" id={`${k}-err`}>{t(`form.errors.${errors[k]}`) || t('form.errors.invalid')}</span>;
   const inv = (k) => ({ 'aria-invalid': errors[k] ? 'true' : undefined, 'aria-describedby': errors[k] ? `${k}-err` : undefined });
   const state = computeState(v);
-  const suggestions = v.specialty ? t(`suggestions.${v.specialty}`) : [];
 
   if (!loaded) return <div className="empty">{t('common.loading')}</div>;
 
@@ -255,14 +257,14 @@ export default function DogForm() {
               <ul className="tasks">
                 {v.tasks.map((x, i) => (
                   <li key={x}>
-                    <span>{x}</span>
-                    <button type="button" className="icon-btn" onClick={() => moveTask(i, -1)} disabled={i === 0} aria-label={`${t('form.moveUp')}: ${x}`}>
+                    <span>{taskText(x, lang)}</span>
+                    <button type="button" className="icon-btn" onClick={() => moveTask(i, -1)} disabled={i === 0} aria-label={`${t('form.moveUp')}: ${taskText(x, lang)}`}>
                       <Icon name="up" size={15} />
                     </button>
-                    <button type="button" className="icon-btn" onClick={() => moveTask(i, 1)} disabled={i === v.tasks.length - 1} aria-label={`${t('form.moveDown')}: ${x}`}>
+                    <button type="button" className="icon-btn" onClick={() => moveTask(i, 1)} disabled={i === v.tasks.length - 1} aria-label={`${t('form.moveDown')}: ${taskText(x, lang)}`}>
                       <Icon name="down" size={15} />
                     </button>
-                    <button type="button" className="icon-btn" onClick={() => setV((s) => ({ ...s, tasks: s.tasks.filter((_, j) => j !== i) }))} aria-label={`${t('form.remove')}: ${x}`}>
+                    <button type="button" className="icon-btn" onClick={() => setV((s) => ({ ...s, tasks: s.tasks.filter((_, j) => j !== i) }))} aria-label={`${t('form.remove')}: ${taskText(x, lang)}`}>
                       <Icon name="x" size={15} />
                     </button>
                   </li>
@@ -274,18 +276,17 @@ export default function DogForm() {
                   </button>
                 </li>
               </ul>
-              {Array.isArray(suggestions) && suggestions.filter((s) => !v.tasks.includes(s)).length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
-                  <span className="muted" style={{ fontSize: 12.5 }}>{t('form.suggested')}:</span>
-                  {suggestions
-                    .filter((s) => !v.tasks.includes(s))
-                    .map((s) => (
-                      <button key={s} type="button" className="chip-add" onClick={() => addTask(s)}>
-                        + {s}
-                      </button>
-                    ))}
-                </div>
-              )}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+                <span className="muted" style={{ fontSize: 12.5 }}>{t('form.suggested')}:</span>
+                {DIAGNOSES.map((d) => {
+                  const missing = d.tasks.filter((k) => !v.tasks.includes(k.id)).length;
+                  return (
+                    <button key={d.id} type="button" className="chip-add" disabled={!missing} style={{ opacity: missing ? 1 : 0.45 }} onClick={() => addDiagnosis(d)}>
+                      + {d.label[lang] || d.label.es} <span className="count" style={{ marginLeft: 4 }}>{d.tasks.length}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

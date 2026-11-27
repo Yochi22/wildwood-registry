@@ -27,7 +27,7 @@ const api = (cookie) => (p, opts = {}) =>
 const dog = {
   dog_name: 'Luna', owner_name: 'María Ríos', microchip: '985112003456789',
   breed: 'Golden', specialty: 'psychiatric_service', country: 'CO', issue_date: '2026-01-10',
-  expiry_date: '2099-01-10', lifetime: false, tasks: ['Tarea uno'], notes: 'secreto interno',
+  expiry_date: '2099-01-10', lifetime: false, tasks: ['@anxiety.1', 'Tarea escrita a mano'], notes: 'secreto interno',
 };
 
 before(async () => {
@@ -83,6 +83,9 @@ test('flujo completo: crear, listar, perfil público, QR, PDF, permisos', async 
 
   const life = await a('/api/dogs', { method: 'POST', body: JSON.stringify({ ...dog, microchip: null, dog_name: 'Kira', lifetime: true, expiry_date: '' }) });
   assert.equal((await life.json()).dog.state, 'lifetime');
+
+  const bad = await a('/api/dogs', { method: 'POST', body: JSON.stringify({ ...dog, microchip: null, tasks: ['@no.existe'] }) });
+  assert.equal(bad.status, 400);
 
   const list = await (await a('/api/dogs?q=luna&state=valid')).json();
   assert.equal(list.total, 1);

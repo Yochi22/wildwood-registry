@@ -125,6 +125,12 @@ sudo cp deploy/backup.cron /etc/cron.d/wildwood-registry
 
 Antes, verifica que el puerto 3001 esté libre (`sudo ss -ltnp | grep 3001`). Si no lo está, cambia `PORT` en `.env` y en `deploy/nginx.conf`.
 
+### Catálogo de tareas por diagnóstico
+
+Las tareas oficiales están en `shared/task-catalog.json`, agrupadas por diagnóstico (Síncope, Hipoacusia, Ansiedad, Depresión) y traducidas a ES, EN, FR y PT. En el formulario se agregan con un clic por diagnóstico, y el perfil del QR las muestra en el idioma de quien lo consulta. El diagnóstico no se guarda ni se muestra.
+
+Para agregar un diagnóstico o una tarea, edita ese archivo y añade entradas con un `id` nuevo; no cambies los `id` existentes, porque los registros ya guardados los usan. Después, actualiza el servidor como de costumbre.
+
 ### Verificación en dos pasos (2FA)
 
 Con `REQUIRE_2FA=true` en `.env`, toda cuenta debe activar una app autenticadora (Google Authenticator, Authy, Microsoft Authenticator) antes de poder usar el panel. Al entrar por primera vez, la persona va directo a «Mi cuenta» para escanear el código QR.

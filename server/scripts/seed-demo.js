@@ -26,7 +26,7 @@ db.transaction(() => {
       generateRegNumber(), i % 13 === 5 ? 'inactive' : 'active', pick(owners, i * 7),
       i % 6 === 3 ? null : String(985112000000000 + i * 7919), pick(dogs, i), pick(breeds, i * 3), pick(SPECIALTIES, i * 5),
       pick(countries, i), issue, expiry, lifetime,
-      JSON.stringify(['Interrumpir crisis de ansiedad con presión profunda', 'Recordar la toma de medicación', 'Crear espacio personal en lugares concurridos'].slice(0, (i % 3) + 1)),
+      JSON.stringify(['@anxiety.1', '@anxiety.2', '@anxiety.3', '@anxiety.4'].slice(0, (i % 4) + 1)),
       admin?.id ?? null, admin?.id ?? null, `${issue} 10:00:00`
     );
   }
