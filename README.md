@@ -175,14 +175,14 @@ sudo chmod 600 /var/lib/wildwood-registry/rclone.conf
 ```bash
 sudo -u registry rclone copy b2:wildwood-registry-respaldos/photos /var/lib/wildwood-registry/backups/photos --config /var/lib/wildwood-registry/rclone.conf
 sudo -u registry rclone copy b2:wildwood-registry-respaldos/db /var/lib/wildwood-registry/backups/db --config /var/lib/wildwood-registry/rclone.conf
-sudo -u registry npm run restore -- NOMBRE_DEL_ULTIMO_ARCHIVO.sqlite.gz
+sudo -u registry node --env-file=.env server/scripts/restore.js NOMBRE_DEL_ULTIMO_ARCHIVO.sqlite.gz
 ```
 
 **Restaurar:**
 
 ```bash
 sudo systemctl stop wildwood-registry
-sudo -u registry npm run restore -- registry-2026-11-26_0317.sqlite.gz
+sudo -u registry node --env-file=.env server/scripts/restore.js registry-2026-11-26_0317.sqlite.gz
 sudo systemctl start wildwood-registry
 ```
 
