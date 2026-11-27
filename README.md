@@ -58,7 +58,7 @@ sudo chown $USER:$USER /opt/wildwood-registry
 sudo chown registry:registry /var/lib/wildwood-registry && sudo chmod 750 /var/lib/wildwood-registry
 
 # 3. Código (repositorio privado: ver «Llave de despliegue» abajo)
-git clone git@github.com:Yochi22/wildwood-registry.git /opt/wildwood-registry
+git clone git@github.com:USUARIO/wildwood-registry.git /opt/wildwood-registry   # USUARIO = cuenta dueña del repositorio
 cd /opt/wildwood-registry && npm ci && npm run build
 
 # 4. Configuración
