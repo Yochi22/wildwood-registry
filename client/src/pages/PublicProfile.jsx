@@ -64,6 +64,9 @@ export default function PublicProfile() {
 
   const { dog: d, state } = data;
   const s = STYLE[state];
+  // Si la credencial es válida, el título indica qué tipo de perro es; si no, su estado.
+  const kind = d.specialty === 'emotional_support' ? 'emotional' : d.specialty === 'therapy' ? 'therapy' : 'service';
+  const title = state === 'active' || state === 'lifetime' ? t(`pub.kind.${kind}`) : t(`states.${state}`);
   const desc = t(`pub.${state}`, { date: fmtLong(state === 'pending' ? d.issue_date : d.expiry_date), brand: brand.name });
   const items = [
     [t('fields.owner'), d.owner_name],
@@ -82,7 +85,7 @@ export default function PublicProfile() {
             <Icon name={s.icon} size={24} stroke={2.8} />
           </span>
           <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <span className="display" style={{ fontSize: 22, letterSpacing: '.04em' }}>{t(`states.${state}`)}</span>
+            <span className="display" style={{ fontSize: 22, letterSpacing: '.04em', lineHeight: 1.1 }}>{title}</span>
             <span style={{ fontWeight: 500 }}>{desc}</span>
           </span>
         </div>
