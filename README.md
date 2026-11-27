@@ -186,4 +186,4 @@ sudo -u registry node --env-file=.env server/scripts/restore.js registry-2026-11
 sudo systemctl start wildwood-registry
 ```
 
-`npm run restore` sin argumentos lista los respaldos disponibles. La base anterior se guarda aparte antes de restaurar.
+El mismo comando sin nombre de archivo lista los respaldos disponibles. La base anterior se guarda aparte antes de restaurar.
