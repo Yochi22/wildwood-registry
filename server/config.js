@@ -7,9 +7,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(__dirname, '..');
 
 // Carga .env simple (sin dependencias). Las variables ya definidas tienen prioridad.
+// En producción systemd ya carga el .env (EnvironmentFile); si este proceso no puede leerlo, se omite.
 const envFile = path.join(ROOT, '.env');
-if (fs.existsSync(envFile)) {
-  for (const line of fs.readFileSync(envFile, 'utf8').split(/\r?\n/)) {
+let envText = '';
+try {
+  envText = fs.readFileSync(envFile, 'utf8');
+} catch {}
+if (envText) {
+  for (const line of envText.split(/\r?\n/)) {
     const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/);
     if (m && process.env[m[1]] === undefined) process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
   }

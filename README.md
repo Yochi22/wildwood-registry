@@ -95,6 +95,12 @@ Pega esa línea en GitHub → repositorio → Settings → Deploy keys → Add d
 
 En el DNS de wildwood-training.com, crea un registro **A** `registry` que apunte a la IP del VPS. Caddy obtiene el certificado HTTPS automáticamente.
 
+**Si editas el `.env`** (con `nano` o `sed`), vuelve a ajustar sus permisos y reinicia:
+
+```bash
+sudo chown $USER:registry .env && chmod 640 .env && sudo systemctl restart wildwood-registry
+```
+
 **Actualizar:**
 
 ```bash
