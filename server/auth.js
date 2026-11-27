@@ -75,10 +75,15 @@ export const requireRole = (role) => (req, res, next) => {
 export function csrfGuard(req, res, next) {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
   if (req.get('x-requested-with') !== 'fetch') return res.status(403).json({ error: 'csrf' });
+  // El Origin debe ser el propio sitio: el de PUBLIC_URL o el mismo host por el que llegó la petición.
   const origin = req.get('origin');
   if (origin && isProd) {
-    const allowed = new URL(config.publicUrl).origin;
-    if (origin !== allowed) return res.status(403).json({ error: 'csrf' });
+    let host = null;
+    try {
+      host = new URL(origin).host;
+    } catch {}
+    const sameSite = origin === new URL(config.publicUrl).origin || host === req.get('host');
+    if (!sameSite) return res.status(403).json({ error: 'csrf' });
   }
   next();
 }
