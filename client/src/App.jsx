@@ -20,6 +20,7 @@ function Private({ role = 'viewer', children }) {
   const loc = useLocation();
   if (user === undefined) return null;
   if (!user) return <Navigate to="/login" replace state={{ from: loc.pathname + loc.search }} />;
+  if (user.mfaSetupRequired && loc.pathname !== '/cuenta') return <Navigate to="/cuenta" replace />;
   if (!can(user, role)) return <Navigate to="/" replace />;
   return children;
 }

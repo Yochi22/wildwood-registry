@@ -44,6 +44,8 @@ export const config = {
   publicUrl: (env.PUBLIC_URL || 'http://localhost:5173').replace(/\/$/, ''),
   regPrefix: (env.REG_PREFIX || 'WWT').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 6) || 'WWT',
   timezone: env.APP_TIMEZONE || 'UTC',
+  // Obliga a todas las cuentas a activar la verificación en dos pasos antes de usar el panel.
+  require2fa: env.REQUIRE_2FA === 'true',
   maxLoginAttempts: 5,
   lockMinutes: 15,
   brand: {

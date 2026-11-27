@@ -119,6 +119,18 @@ sudo cp deploy/backup.cron /etc/cron.d/wildwood-registry
 
 Antes, verifica que el puerto 3001 esté libre (`sudo ss -ltnp | grep 3001`). Si no lo está, cambia `PORT` en `.env` y en `deploy/nginx.conf`.
 
+### Verificación en dos pasos (2FA)
+
+Con `REQUIRE_2FA=true` en `.env`, toda cuenta debe activar una app autenticadora (Google Authenticator, Authy, Microsoft Authenticator) antes de poder usar el panel. Al entrar por primera vez, la persona va directo a «Mi cuenta» para escanear el código QR.
+
+Si alguien pierde el celular:
+- Un administrador puede quitarle la 2FA desde «Usuarios».
+- Si el afectado es el único administrador, en el VPS:
+
+```bash
+cd /opt/wildwood-registry && sudo -u registry node --env-file=.env server/scripts/reset-2fa.js correo@dominio.com
+```
+
 ### Logo
 
 Coloca el logo de Wildwood en PNG con fondo transparente en `DATA_DIR/brand/logo.png`. Se usa en el panel, en el perfil público y en el carnet PDF. Mientras no exista, se muestra un escudo provisional.

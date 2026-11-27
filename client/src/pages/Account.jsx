@@ -33,7 +33,11 @@ export default function Account() {
 
   async function startSetup() {
     setMfaErr('');
-    setSetup(await api('/api/auth/2fa/setup', { method: 'POST' }));
+    try {
+      setSetup(await api('/api/auth/2fa/setup', { method: 'POST' }));
+    } catch {
+      setMfaErr(t('common.error'));
+    }
   }
   async function enable(e) {
     e.preventDefault();
@@ -64,6 +68,11 @@ export default function Account() {
       <div className="page-head">
         <h1 className="display">{t('nav.account')}</h1>
       </div>
+      {user.mfaSetupRequired && (
+        <div role="alert" style={{ background: '#FBE9C2', color: '#6E4600', borderRadius: 8, padding: '14px 16px', fontWeight: 600 }}>
+          {t('account.required')}
+        </div>
+      )}
       <div className="grid-2">
         <section className="panel">
           <div className="panel-head"><h2>{t('account.profile')}</h2></div>

@@ -55,6 +55,12 @@ export function sessionMiddleware(req, _res, next) {
   next();
 }
 
+/** Con REQUIRE_2FA=true, una cuenta sin 2FA solo puede configurarla; nada más. */
+export function enforce2fa(req, res, next) {
+  if (config.require2fa && req.user && !req.user.totp_enabled) return res.status(403).json({ error: 'mfa_setup_required' });
+  next();
+}
+
 export function requireAuth(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'unauthorized' });
   next();

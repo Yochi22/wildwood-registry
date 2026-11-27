@@ -20,7 +20,7 @@ export default function Layout() {
     can(user, 'editor') && { to: '/registros/nuevo', icon: 'plus', label: t('nav.newRecord'), end: true },
     can(user, 'admin') && { to: '/usuarios', icon: 'users', label: t('nav.users') },
     can(user, 'admin') && { to: '/actividad', icon: 'clock', label: t('nav.activity') },
-  ].filter(Boolean);
+  ].filter((l) => l && !user?.mfaSetupRequired);
 
   return (
     <div className={`shell ${open ? 'open' : ''}`}>

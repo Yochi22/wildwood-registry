@@ -4,7 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { config, ROOT, isProd } from './config.js';
-import { sessionMiddleware, csrfGuard } from './auth.js';
+import { sessionMiddleware, csrfGuard, enforce2fa } from './auth.js';
 import authRoutes from './routes/auth.js';
 import dogRoutes from './routes/dogs.js';
 import userRoutes from './routes/users.js';
@@ -62,9 +62,9 @@ export function createApp() {
   app.use('/api', csrfGuard);
   app.use('/api/public', publicRoutes);
   app.use('/api/auth', authRoutes);
-  app.use('/api/dogs', dogRoutes);
-  app.use('/api/users', userRoutes);
-  app.use('/api/audit', auditRoutes);
+  app.use('/api/dogs', enforce2fa, dogRoutes);
+  app.use('/api/users', enforce2fa, userRoutes);
+  app.use('/api/audit', enforce2fa, auditRoutes);
   app.use('/api', (_req, res) => res.status(404).json({ error: 'not_found' }));
 
   const dist = path.join(ROOT, 'dist');

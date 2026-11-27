@@ -22,7 +22,7 @@ const getByEmail = db.prepare('SELECT * FROM users WHERE email = ?');
 const getById = db.prepare('SELECT * FROM users WHERE id = ?');
 
 function publicUser(u) {
-  return { id: u.id, email: u.email, name: u.name, role: u.role, totpEnabled: !!u.totp_enabled };
+  return { id: u.id, email: u.email, name: u.name, role: u.role, totpEnabled: !!u.totp_enabled, mfaSetupRequired: config.require2fa && !u.totp_enabled };
 }
 
 async function checkTotp(user, code) {
