@@ -69,6 +69,9 @@ export default function PublicProfile() {
   const title = state === 'active' || state === 'lifetime' ? t(`pub.kind.${kind}`) : t(`states.${state}`);
   const desc = t(`pub.${state}`, { date: fmtLong(state === 'pending' ? d.issue_date : d.expiry_date), brand: brand.name });
   const items = [
+    [t('fields.dogName'), d.dog_name],
+    [t('fields.breed'), d.breed],
+    [t('fields.specialty'), t(`specialties.${d.specialty}`)],
     [t('fields.owner'), d.owner_name],
     [t('fields.microchip'), d.microchip],
     [t('fields.country'), country(d.country)],
