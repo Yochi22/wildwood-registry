@@ -1,5 +1,5 @@
 export default {
-  common: { save: 'Save', cancel: 'Cancel', close: 'Close', edit: 'Edit', delete: 'Delete', loading: 'Loading…', all: 'All', actions: 'Actions', more: 'More actions', copied: 'Link copied', print: 'Print', error: 'Something went wrong. Please try again.', logout: 'Sign out', confirm: 'Confirm', yes: 'Yes', no: 'No', choose: 'Select…', none: '', noData: 'No data' },
+  common: { reload: 'Reload', save: 'Save', cancel: 'Cancel', close: 'Close', edit: 'Edit', delete: 'Delete', loading: 'Loading…', all: 'All', actions: 'Actions', more: 'More actions', copied: 'Link copied', print: 'Print', error: 'Something went wrong. Please try again.', logout: 'Sign out', confirm: 'Confirm', yes: 'Yes', no: 'No', choose: 'Select…', none: '', noData: 'No data' },
   nav: { dashboard: 'Home', records: 'Records', newRecord: 'New record', users: 'Users', activity: 'Activity', account: 'My account', menu: 'Open menu', closeMenu: 'Close menu' },
   roles: { admin: 'Administrator', editor: 'Editor', viewer: 'Read only' },
   states: { active: 'Valid', lifetime: 'Lifetime', pending: 'Not yet valid', expired: 'Expired', inactive: 'Inactive', expiring: 'Expiring soon', valid: 'Valid (all)' },

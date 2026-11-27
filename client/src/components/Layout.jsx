@@ -3,6 +3,7 @@ import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
 import Icon from './Icon.jsx';
 import { Logo } from './Brand.jsx';
 import LangSwitch from './LangSwitch.jsx';
+import ErrorBoundary from './ErrorBoundary.jsx';
 import { useAuth } from '../lib/auth.jsx';
 import { useI18n } from '../i18n/index.jsx';
 import { can, initials } from '../lib/constants.js';
@@ -69,7 +70,9 @@ export default function Layout() {
         </div>
       </aside>
       <main className="content" id="main">
-        <Outlet />
+        <ErrorBoundary resetKey={loc.pathname}>
+          <Outlet />
+        </ErrorBoundary>
       </main>
     </div>
   );

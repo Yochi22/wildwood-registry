@@ -1,5 +1,5 @@
 export default {
-  common: { save: 'Salvar', cancel: 'Cancelar', close: 'Fechar', edit: 'Editar', delete: 'Excluir', loading: 'Carregando…', all: 'Todos', actions: 'Ações', more: 'Mais ações', copied: 'Link copiado', print: 'Imprimir', error: 'Algo deu errado. Tente novamente.', logout: 'Sair', confirm: 'Confirmar', yes: 'Sim', no: 'Não', choose: 'Selecione…', none: '', noData: 'Sem dados' },
+  common: { reload: 'Recarregar', save: 'Salvar', cancel: 'Cancelar', close: 'Fechar', edit: 'Editar', delete: 'Excluir', loading: 'Carregando…', all: 'Todos', actions: 'Ações', more: 'Mais ações', copied: 'Link copiado', print: 'Imprimir', error: 'Algo deu errado. Tente novamente.', logout: 'Sair', confirm: 'Confirmar', yes: 'Sim', no: 'Não', choose: 'Selecione…', none: '', noData: 'Sem dados' },
   nav: { dashboard: 'Início', records: 'Registros', newRecord: 'Novo registro', users: 'Usuários', activity: 'Atividade', account: 'Minha conta', menu: 'Abrir menu', closeMenu: 'Fechar menu' },
   roles: { admin: 'Administrador', editor: 'Editor', viewer: 'Somente leitura' },
   states: { active: 'Vigente', lifetime: 'Vitalícia', pending: 'Ainda não vigente', expired: 'Vencida', inactive: 'Inativa', expiring: 'Vence em breve', valid: 'Válidas' },

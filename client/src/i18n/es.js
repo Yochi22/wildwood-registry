@@ -1,5 +1,5 @@
 export default {
-  common: { save: 'Guardar', cancel: 'Cancelar', close: 'Cerrar', edit: 'Editar', delete: 'Eliminar', loading: 'Cargando…', all: 'Todos', actions: 'Acciones', more: 'Más acciones', copied: 'Enlace copiado', print: 'Imprimir', error: 'Algo salió mal. Inténtalo de nuevo.', logout: 'Cerrar sesión', confirm: 'Confirmar', yes: 'Sí', no: 'No', choose: 'Selecciona…', none: '', noData: 'Sin datos' },
+  common: { reload: 'Recargar', save: 'Guardar', cancel: 'Cancelar', close: 'Cerrar', edit: 'Editar', delete: 'Eliminar', loading: 'Cargando…', all: 'Todos', actions: 'Acciones', more: 'Más acciones', copied: 'Enlace copiado', print: 'Imprimir', error: 'Algo salió mal. Inténtalo de nuevo.', logout: 'Cerrar sesión', confirm: 'Confirmar', yes: 'Sí', no: 'No', choose: 'Selecciona…', none: '', noData: 'Sin datos' },
   nav: { dashboard: 'Inicio', records: 'Registros', newRecord: 'Nuevo registro', users: 'Usuarios', activity: 'Actividad', account: 'Mi cuenta', menu: 'Abrir menú', closeMenu: 'Cerrar menú' },
   roles: { admin: 'Administrador', editor: 'Editor', viewer: 'Solo lectura' },
   states: { active: 'Vigente', lifetime: 'Vitalicia', pending: 'Aún no vigente', expired: 'Vencida', inactive: 'Inactiva', expiring: 'Vence pronto', valid: 'Válidas' },

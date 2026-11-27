@@ -46,7 +46,7 @@ export default function DataTable({ columns, rows, rowKey = 'id', sort, onSort, 
               </th>
             )}
             {columns.map((c) => {
-              const on = sort?.key === c.sortKey;
+              const on = !!sort && !!c.sortKey && sort.key === c.sortKey;
               return (
                 <th key={c.key} style={c.thStyle} aria-sort={on ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
                   {c.sortKey && onSort ? (

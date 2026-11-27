@@ -1,5 +1,5 @@
 export default {
-  common: { save: 'Enregistrer', cancel: 'Annuler', close: 'Fermer', edit: 'Modifier', delete: 'Supprimer', loading: 'Chargement…', all: 'Tous', actions: 'Actions', more: 'Plus d’actions', copied: 'Lien copié', print: 'Imprimer', error: 'Une erreur est survenue. Réessayez.', logout: 'Se déconnecter', confirm: 'Confirmer', yes: 'Oui', no: 'Non', choose: 'Choisir…', none: '', noData: 'Aucune donnée' },
+  common: { reload: 'Recharger', save: 'Enregistrer', cancel: 'Annuler', close: 'Fermer', edit: 'Modifier', delete: 'Supprimer', loading: 'Chargement…', all: 'Tous', actions: 'Actions', more: 'Plus d’actions', copied: 'Lien copié', print: 'Imprimer', error: 'Une erreur est survenue. Réessayez.', logout: 'Se déconnecter', confirm: 'Confirmer', yes: 'Oui', no: 'Non', choose: 'Choisir…', none: '', noData: 'Aucune donnée' },
   nav: { dashboard: 'Accueil', records: 'Dossiers', newRecord: 'Nouveau dossier', users: 'Utilisateurs', activity: 'Activité', account: 'Mon compte', menu: 'Ouvrir le menu', closeMenu: 'Fermer le menu' },
   roles: { admin: 'Administrateur', editor: 'Éditeur', viewer: 'Lecture seule' },
   states: { active: 'Valide', lifetime: 'À vie', pending: 'Pas encore valide', expired: 'Expirée', inactive: 'Inactive', expiring: 'Expire bientôt', valid: 'Valides (toutes)' },
